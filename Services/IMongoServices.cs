@@ -9,6 +9,12 @@ namespace Services
 {
     public interface IMongoServices
     {
-        IMongoDatabase GetOr
+        /// <summary>
+        /// connect and get database in one function
+        /// </summary>
+        /// <param name="Confog"></param>
+        /// <param name="DbName"></param>
+        /// <returns></returns>
+        IMongoDatabase ConnectAndGetDatabase(string Confog, string DbName);
     }
 }

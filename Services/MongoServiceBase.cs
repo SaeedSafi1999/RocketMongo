@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public abstract class MongoServiceBase
+    public abstract class MongoServiceBase : IMongoServices
     {
+        public virtual IMongoDatabase ConnectAndGetDatabase(string Confog, string DbName)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Use this method for connect and get database
         /// </summary>
