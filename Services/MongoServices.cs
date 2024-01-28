@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Services
 {
-    public class MongoServices
+    public static class MongoServices
     {
         /// <summary>
         /// Use this method for connect and get database
@@ -19,17 +21,45 @@ namespace Services
         /// <param name="Config"></param>
         /// <param name="DbName"></param>
         /// <returns>Database in mongo server</returns>
-        public sealed override MongoClient ConnectMongo(string Config)
+        public static IMongoDatabase ConnectMongoAndGetDatabase(string Config,string DbName)
         {
+
             try
             {
-                return new MongoClient(Config);
+                 var client = new MongoClient(Config);
+                return client.GetDatabase(DbName);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error connecting to MongoDB: " + ex.Message);
                 return null;
             }
+        }
+        /// <summary>
+        /// connect To Mongo
+        /// </summary>
+        /// <param name="Config"></param>
+        /// <returns></returns>
+        public static IMongoClient ConnectMongo(string Config)
+        {
+            try
+            {
+                return  new MongoClient(Config);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// create collection async
+        /// </summary>
+        /// <param name="Database"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static async Task<bool> CreateCollectionAsync(this IMongoDatabase Database,string name)
+        {
+            await Database.CreateCollectionAsync(name);
+            return true;
         }
         /// <summary>
         /// to get database 
@@ -77,6 +107,42 @@ namespace Services
             return await query.ToListAsync();
                 
         }
+        /// <summary>
+        /// this method insert to collection
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<bool> InsertOneToCollectionAsync<TEntity>(this IMongoCollection<TEntity> Collection, TEntity Model)
+        {
+            try
+            {
+                await Collection.InsertOneAsync(Model);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// add many to collection
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="Collection"></param>
+        /// <param name="ModelList"></param>
+        /// <returns></returns>
+        public static async Task<bool> InsertManyToCollectionAsync<TEntity>(this IMongoCollection<TEntity> Collection, List<TEntity> ModelList)
+        {
+            try
+            {
+                await Collection.InsertManyAsync(ModelList);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        
 
     }
 }

@@ -3,21 +3,36 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Services;
 
+//make collection
+var Userdb = MongoServices.ConnectMongoAndGetDatabase("mongodb://127.0.0.1:27017", "Test")
+    .GetCollection<User>("User");
 
-var Userdb =MongoServices.ConnectMongo("mongodb://127.0.0.1:27017")
-    .GetDatabaseByName("Test")
-    .GetCollectionByName<User>("User")
-    .MakeCollectionAsQueryAble();
-
-
-
-var Users = await Userdb.ToListAsync();
-foreach (var item in Users)
+//insert Test
+var InsertOneTest = await Userdb.InsertOneToCollectionAsync<User>(new User
 {
- Console.WriteLine(item.FullName);
-}
+    FullName = "reza",
+    Id = 2,
+    Mobile = "09365987474"
+});
+Console.WriteLine($"Insert Test Pass:{InsertOneTest}");
 
 
+//insert many Test
+var InsertManyTest = await Userdb.InsertManyToCollectionAsync<User>(new List<User>
+{
+    new User{ FullName = "rezahasan",Id = 3,Mobile = "09365987474"},
+    new User{ FullName = "ahmad",Id = 3,Mobile = "09365987474"},
+    new User{ FullName = "hadi",Id = 4,Mobile = "09365987474"},
+    new User{ FullName = "alireza",Id = 5,Mobile = "09365987474"}
+});
+Console.WriteLine($"Insert Test Pass:{InsertManyTest}");
+
+
+
+
+/// <summary>
+/// user model 
+/// </summary>
 public class User
 {
     [BsonId]

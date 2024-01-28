@@ -21,10 +21,10 @@ namespace Services
         /// <param name="Config"></param>
         /// <param name="DbName"></param>
         /// <returns></returns>
-        public IMongoDatabase ConnectAndGetDB(string Config, string DbName);
+        //public IMongoDatabase ConnectAndGetDB(string Config, string DbName);
        
 
-        public void MakeCollectionQueryAble();
+        //public void MakeCollectionQueryAble();
        
 
 
