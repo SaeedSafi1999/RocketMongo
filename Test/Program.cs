@@ -3,7 +3,15 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Services;
 
-//make collection
+//test is collection exist
+var IsExist = await MongoServices.ConnectMongoAndGetDatabase("mongodb://127.0.0.1:27017", "Test")
+    .IsCollectionExist("User");
+Console.WriteLine(IsExist);
+
+//get database by name
+var Database = MongoServices.ConnectMongo("mongodb://127.0.0.1:27017")
+    .GetDatabase("ModernAfzarPars");
+//get collection
 var Userdb = MongoServices.ConnectMongoAndGetDatabase("mongodb://127.0.0.1:27017", "Test")
     .GetCollection<User>("User");
 
@@ -16,6 +24,15 @@ var InsertOneTest = await Userdb.InsertOneToCollectionAsync<User>(new User
 });
 Console.WriteLine($"Insert Test Pass:{InsertOneTest}");
 
+//Create collectionTest
+var AddCollectionTest = await MongoServices.ConnectMongoAndGetDatabase("mongodb://127.0.0.1:27017", "Test")
+    .CreateOneCollection("Templates");
+
+//create Database Test
+var Createdatabase = MongoServices.ConnectMongo("mongodb://127.0.0.1:27017")
+    .CreateOneDatabase("Test1");
+if (Createdatabase)
+    Console.WriteLine($"Create database:{Createdatabase}");
 
 //insert many Test
 var InsertManyTest = await Userdb.InsertManyToCollectionAsync<User>(new List<User>
@@ -26,6 +43,12 @@ var InsertManyTest = await Userdb.InsertManyToCollectionAsync<User>(new List<Use
     new User{ FullName = "alireza",Id = 5,Mobile = "09365987474"}
 });
 Console.WriteLine($"Insert Test Pass:{InsertManyTest}");
+
+//CreateManyCollectionsTest
+var CreateManyCollection = await MongoServices.ConnectMongoAndGetDatabase("mongodb://127.0.0.1:27017", "Test")
+    .CreateManyCollectionsAsync(new List<string> { "Users", "Roles", "Products", "Templates", "Customers" });
+if (CreateManyCollection)
+    Console.WriteLine(CreateManyCollection);
 
 
 
