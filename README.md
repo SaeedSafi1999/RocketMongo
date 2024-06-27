@@ -6,7 +6,7 @@ RocketMongo is a utility library designed to simplify interactions with MongoDB.
 
 Install the RocketMongo package via NuGet Package Manager Console:
 
-    Install-Package RocketMongo
+    Install-Package SaeedSafi.RocketMongo
 
 ## Examples
 this is real example usage of this package
