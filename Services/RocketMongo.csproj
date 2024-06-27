@@ -5,8 +5,28 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <PackageId>SaeedSafi.RocketMongo</PackageId>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>RocketMongo</Title>
+	  <Product>RocketMongo</Product>
+	  <Description>this package has lot of extention methods that helps  you to code faster in mongoDB client.</Description>
+	  <PackageIcon>MongoDB-Emblem-removebg-preview(2).png</PackageIcon>
+	  <RepositoryType>git</RepositoryType>
+	  <Version>1.0.1</Version>
+	  <RepositoryUrl>https://github.com/SaeedSafi1999/RocketMongo</RepositoryUrl>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="C:\Users\DIAKO\Desktop\MongoDB-Emblem-removebg-preview(2).png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
